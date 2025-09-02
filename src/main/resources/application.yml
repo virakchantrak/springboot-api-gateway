@@ -1,36 +1,12 @@
-server:
-  port: 9191
-
 spring:
   application:
     name: API-GATEWAY
 
-## Manually configure routes
-#  cloud:
-#    gateway:
-#      server:
-#        webflux:
-#          routes:
-#            - id: department-service
-#              uri: lb://DEPARTMENT-SERVICE
-#              predicates:
-#                - Path=/api/departments/**
-#            - id: employee-service
-#              uri: lb://EMPLOYEE-SERVICE
-#              predicates:
-#                - Path=/api/employees/**
+  config:
+    import: "configserver:http://localhost:8888"
 
-## Auto-discover routes using service discovery
-  cloud:
-    gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info
